@@ -18,7 +18,9 @@ namespace PilTuketimHesaplayici
         }
         private void Form1_Shown(object sender, EventArgs e)
         {
-            Ayarlar = new Ayarlar_(out bool sonuç);
+            Ayarlar = new Ayarlar_(out _);
+
+            Font = new Font(Font.FontFamily, Convert.ToInt32(Ayarlar.Oku("BuyutmeOrani", "8")));
 
             İşler = Ayarlar.Listele_AltDal(Ayarlar.Oku("İşler"));
             foreach (var biri in İşler)
@@ -103,10 +105,12 @@ namespace PilTuketimHesaplayici
                     List<Depo.Biri> Satırlar = Ayarlar.Listele_AltDal(iş.İçeriği);
 
                     Liste.Rows.Clear();
-                    Liste.RowCount = Satırlar.Count + 1;
+                    Liste.RowCount = Satırlar.Count + 1 - 3;
 
                     for (int i = 0; i < Satırlar.Count; i++)
                     {
+                        if (!Satırlar[i].Adı.StartsWith("Satir")) continue;
+
                         Liste[0, i].Value = Ayarlar.Oku_AltDal(Satırlar[i].İçeriği, "Akım");
                         Liste[1, i].Value = Ayarlar.Oku_AltDal(Satırlar[i].İçeriği, "Etkin");
                         Liste[2, i].Value = Ayarlar.Oku_AltDal(Satırlar[i].İçeriği, "Durgun");
@@ -115,6 +119,9 @@ namespace PilTuketimHesaplayici
                         Liste[4, i].Value = Ayarlar.Oku_AltDal(Satırlar[i].İçeriği, "Açıklama");
                     }
 
+                    PilKapasitesi.Text = Ayarlar.Oku_AltDal(iş.İçeriği, "PilKapasitesi", "1000");
+                    PilVerimliliği.Text = Ayarlar.Oku_AltDal(iş.İçeriği, "PilVerimliliği", "80");
+                    Notlar.Text = Ayarlar.Oku_AltDal(iş.İçeriği, "Notlar");
                     return;
                 }
             }
@@ -176,7 +183,16 @@ namespace PilTuketimHesaplayici
 
             for (int i = 0; i < Liste.RowCount; i++)
             {
+                if (string.IsNullOrEmpty((string)Liste[0, i].Value) &&
+                    string.IsNullOrEmpty((string)Liste[1, i].Value) &&
+                    string.IsNullOrEmpty((string)Liste[2, i].Value) &&
+                    string.IsNullOrEmpty((string)Liste[4, i].Value)) continue;
+
+                if (Liste[0, i].Value == null) Liste[0, i].Value = "";
+                if (Liste[1, i].Value == null) Liste[1, i].Value = "";
+                if (Liste[2, i].Value == null) Liste[2, i].Value = "";
                 if (Liste[3, i].Tag == null) Liste[3, i].Tag = (double)0;
+                if (Liste[4, i].Value == null) Liste[4, i].Value = "";
 
                 try
                 {
@@ -187,61 +203,83 @@ namespace PilTuketimHesaplayici
                     Ayarlar.Yaz_AltDal(ref Satır, "Tüketim", ((double)(Liste[3, i].Tag)).ToString());
                     Ayarlar.Yaz_AltDal(ref Satır, "Açıklama", Liste[4, i].Value.ToString());
 
-                    Ayarlar.Yaz_AltDal(ref Tablo, i.ToString(), Satır);
+                    Ayarlar.Yaz_AltDal(ref Tablo, "Satir" + i, Satır);
                 }
                 catch (Exception) { }
             }
 
-            İşler.Add(new Depo.Biri(Liste_İşler.Text, Tablo));
+            Ayarlar.Yaz_AltDal(ref Tablo, "PilKapasitesi", PilKapasitesi.Text);
+            Ayarlar.Yaz_AltDal(ref Tablo, "PilVerimliliği", PilVerimliliği.Text);
+            Ayarlar.Yaz_AltDal(ref Tablo, "Notlar", Notlar.Text);
 
+            //ana listeye ekle
+            İşler.Add(new Depo.Biri(Liste_İşler.Text, Tablo)); 
             string xml = "";
             Ayarlar.ListeyiEkle_AltDal(ref xml, İşler);
             Ayarlar.Yaz("İşler", xml);
             İşler = Ayarlar.Listele_AltDal(Ayarlar.Oku("İşler"));
+
+            //menuye ekle
+            if (!Liste_İşler.Items.Contains(Liste_İşler.Text)) Liste_İşler.Items.Add(Liste_İşler.Text); 
         }
 
         private void PilKapasitesi_TextChanged(object sender, EventArgs e)
         {
-            //Toplam pil kapasitesinin bulunması
-            string gecici = PilKapasitesi.Text;
-            if (!MetniAyıkla_Amper(ref gecici, out double PilKapasite)) { PilKapasitesi.ForeColor = Color.Red; return; }
-            PilKapasitesi.ForeColor = Color.Black;
-            PilKapasitesi.Text = gecici;
+            try
+            {
+                //Toplam pil kapasitesinin bulunması
+                string gecici = PilKapasitesi.Text;
+                if (!MetniAyıkla_Amper(ref gecici, out double PilKapasite)) { PilKapasitesi.ForeColor = Color.Red; return; }
+                PilKapasitesi.ForeColor = Color.Black;
+                PilKapasitesi.Text = gecici;
 
-            //Pil Veriminin hesaplanması
-            if (!double.TryParse(PilVerimliliği.Text, out double PilVerim)) { PilVerimliliği.ForeColor = Color.Red; return; }
-            PilVerimliliği.ForeColor = Color.Black;
+                //Pil Veriminin hesaplanması
+                if (!double.TryParse(PilVerimliliği.Text, out double PilVerim)) { PilVerimliliği.ForeColor = Color.Red; return; }
+                PilVerimliliği.ForeColor = Color.Black;
 
-            //Kullanılabilir kapasite
-            double KullanılabilirKapasite = PilKapasite / 100 * PilVerim;
+                //Kullanılabilir kapasite
+                double KullanılabilirKapasite = PilKapasite / 100 * PilVerim;
 
-            //Kullanılabilir süre
-            HesaplamaSonucu_süre.Text = ArgeMup.HazirKod.Dönüştürme.D_Süre.Metne.Saatten((int)(KullanılabilirKapasite / ToplamTüketim)).Replace("dk. dan", "sa. dan"); ;
+                //Kullanılabilir süre
+                HesaplamaSonucu_süre.Text = ArgeMup.HazirKod.Dönüştürme.D_Süre.Metne.Saatten((int)(KullanılabilirKapasite / ToplamTüketim)).Replace("dk. dan", "sa. dan");
+            }
+            catch (Exception)
+            {
+                PilKapasitesi.ForeColor = Color.Red;
+                PilVerimliliği.ForeColor = Color.Red;
+
+                //MessageBox.Show("Kırmızı işaretli alanlar hesaplamayi zorlaştiriyor, pil kapasitesini azaltmak faydalı olabilir");
+            };
         }
 
         private void toolStripSplitButton1_ButtonClick(object sender, EventArgs e)
         {
-            string a = string.Format("mailto:{0}?Subject={1}&Body={2}", "mup.arge@gmail.com", "Pil Tüketimi Hesaplayıcı Hk.", "Mesajınız");
+            string a = string.Format("mailto:{0}?Subject={1}&Body={2}", "argemup@yandex.com", "Pil Tüketimi Hesaplayıcı Hk.", "Mesajınız");
             System.Diagnostics.Process.Start(a);
         }
         private void Menu_aA_100_Click(object sender, EventArgs e)
         {
+            Ayarlar.Yaz("BuyutmeOrani", "8");
             Font = new System.Drawing.Font(Font.FontFamily, 8);
         }
         private void Menu_aA_125_Click(object sender, EventArgs e)
         {
+            Ayarlar.Yaz("BuyutmeOrani", "10");
             Font = new System.Drawing.Font(Font.FontFamily, 10);
         }
         private void Menu_aA_150_Click(object sender, EventArgs e)
         {
+            Ayarlar.Yaz("BuyutmeOrani", "12");
             Font = new System.Drawing.Font(Font.FontFamily, 12);
         }
         private void Menu_aA_175_Click(object sender, EventArgs e)
         {
+            Ayarlar.Yaz("BuyutmeOrani", "14");
             Font = new System.Drawing.Font(Font.FontFamily, 14);
         }
         private void Menu_aA_200_Click(object sender, EventArgs e)
         {
+            Ayarlar.Yaz("BuyutmeOrani", "16");
             Font = new System.Drawing.Font(Font.FontFamily, 16);
         }
     }

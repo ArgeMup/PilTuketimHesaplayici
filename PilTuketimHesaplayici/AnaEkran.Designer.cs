@@ -54,6 +54,7 @@
             this.Menu_aA_150 = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_aA_175 = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_aA_200 = new System.Windows.Forms.ToolStripMenuItem();
+            this.Notlar = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.Liste)).BeginInit();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -61,11 +62,11 @@
             // PilKapasitesi
             // 
             this.PilKapasitesi.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.PilKapasitesi.Location = new System.Drawing.Point(125, 412);
+            this.PilKapasitesi.Location = new System.Drawing.Point(125, 241);
             this.PilKapasitesi.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.PilKapasitesi.Name = "PilKapasitesi";
-            this.PilKapasitesi.Size = new System.Drawing.Size(201, 22);
-            this.PilKapasitesi.TabIndex = 0;
+            this.PilKapasitesi.Size = new System.Drawing.Size(162, 22);
+            this.PilKapasitesi.TabIndex = 3;
             this.PilKapasitesi.Text = "1000 mA";
             this.İpucu.SetToolTip(this.PilKapasitesi, "X,Y A mA uA nA");
             this.PilKapasitesi.TextChanged += new System.EventHandler(this.PilKapasitesi_TextChanged);
@@ -74,7 +75,7 @@
             // 
             this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(9, 417);
+            this.label1.Location = new System.Drawing.Point(9, 246);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(92, 17);
             this.label1.TabIndex = 2;
@@ -84,7 +85,7 @@
             // 
             this.label7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(9, 441);
+            this.label7.Location = new System.Drawing.Point(9, 270);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(66, 17);
             this.label7.TabIndex = 14;
@@ -93,11 +94,11 @@
             // PilVerimliliği
             // 
             this.PilVerimliliği.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.PilVerimliliği.Location = new System.Drawing.Point(125, 438);
+            this.PilVerimliliği.Location = new System.Drawing.Point(125, 267);
             this.PilVerimliliği.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.PilVerimliliği.Name = "PilVerimliliği";
-            this.PilVerimliliği.Size = new System.Drawing.Size(201, 22);
-            this.PilVerimliliği.TabIndex = 13;
+            this.PilVerimliliği.Size = new System.Drawing.Size(162, 22);
+            this.PilVerimliliği.TabIndex = 4;
             this.PilVerimliliği.Text = "80";
             this.İpucu.SetToolTip(this.PilVerimliliği, "yüzde %");
             this.PilVerimliliği.TextChanged += new System.EventHandler(this.PilKapasitesi_TextChanged);
@@ -128,8 +129,8 @@
             this.Liste.RowHeadersWidth = 25;
             this.Liste.RowTemplate.Height = 28;
             this.Liste.ShowRowErrors = false;
-            this.Liste.Size = new System.Drawing.Size(680, 373);
-            this.Liste.TabIndex = 30;
+            this.Liste.Size = new System.Drawing.Size(618, 202);
+            this.Liste.TabIndex = 2;
             this.Liste.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.Liste_CellValueChanged);
             // 
             // d_Akım
@@ -175,7 +176,7 @@
             // 
             this.HesaplamaSonucu_süre.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.HesaplamaSonucu_süre.AutoSize = true;
-            this.HesaplamaSonucu_süre.Location = new System.Drawing.Point(332, 441);
+            this.HesaplamaSonucu_süre.Location = new System.Drawing.Point(12, 317);
             this.HesaplamaSonucu_süre.Name = "HesaplamaSonucu_süre";
             this.HesaplamaSonucu_süre.Size = new System.Drawing.Size(115, 17);
             this.HesaplamaSonucu_süre.TabIndex = 34;
@@ -190,9 +191,9 @@
             this.Liste_İşler.FormattingEnabled = true;
             this.Liste_İşler.Location = new System.Drawing.Point(12, 6);
             this.Liste_İşler.Name = "Liste_İşler";
-            this.Liste_İşler.Size = new System.Drawing.Size(588, 24);
+            this.Liste_İşler.Size = new System.Drawing.Size(526, 24);
             this.Liste_İşler.Sorted = true;
-            this.Liste_İşler.TabIndex = 38;
+            this.Liste_İşler.TabIndex = 0;
             this.İpucu.SetToolTip(this.Liste_İşler, "Kayıtlı Tanımlar");
             this.Liste_İşler.SelectedIndexChanged += new System.EventHandler(this.Liste_İşler_SelectedIndexChanged);
             this.Liste_İşler.TextChanged += new System.EventHandler(this.Liste_İşler_TextChanged);
@@ -200,10 +201,10 @@
             // EkleGüncelle
             // 
             this.EkleGüncelle.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.EkleGüncelle.Location = new System.Drawing.Point(606, 6);
+            this.EkleGüncelle.Location = new System.Drawing.Point(544, 6);
             this.EkleGüncelle.Name = "EkleGüncelle";
             this.EkleGüncelle.Size = new System.Drawing.Size(86, 24);
-            this.EkleGüncelle.TabIndex = 37;
+            this.EkleGüncelle.TabIndex = 1;
             this.EkleGüncelle.Text = "Güncelle";
             this.EkleGüncelle.UseVisualStyleBackColor = true;
             this.EkleGüncelle.Click += new System.EventHandler(this.EkleGüncelle_Click);
@@ -212,7 +213,7 @@
             // 
             this.HesaplamaSonucu_tüketim.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.HesaplamaSonucu_tüketim.AutoSize = true;
-            this.HesaplamaSonucu_tüketim.Location = new System.Drawing.Point(332, 415);
+            this.HesaplamaSonucu_tüketim.Location = new System.Drawing.Point(12, 296);
             this.HesaplamaSonucu_tüketim.Name = "HesaplamaSonucu_tüketim";
             this.HesaplamaSonucu_tüketim.Size = new System.Drawing.Size(119, 17);
             this.HesaplamaSonucu_tüketim.TabIndex = 39;
@@ -224,9 +225,9 @@
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripDropDownButton1,
             this.Menu_aA});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 469);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 344);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(704, 31);
+            this.statusStrip1.Size = new System.Drawing.Size(642, 31);
             this.statusStrip1.TabIndex = 40;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -239,7 +240,7 @@
             this.toolStripDropDownButton1.ShowDropDownArrow = false;
             this.toolStripDropDownButton1.Size = new System.Drawing.Size(29, 29);
             this.toolStripDropDownButton1.Text = "toolStripDropDownButton1";
-            this.toolStripDropDownButton1.ToolTipText = "mup.arge@gmail.com";
+            this.toolStripDropDownButton1.ToolTipText = "ArgeMup@yandex.com";
             this.toolStripDropDownButton1.Click += new System.EventHandler(this.toolStripSplitButton1_ButtonClick);
             // 
             // Menu_aA
@@ -292,11 +293,23 @@
             this.Menu_aA_200.Text = "% 200";
             this.Menu_aA_200.Click += new System.EventHandler(this.Menu_aA_200_Click);
             // 
+            // Notlar
+            // 
+            this.Notlar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.Notlar.Location = new System.Drawing.Point(293, 241);
+            this.Notlar.Multiline = true;
+            this.Notlar.Name = "Notlar";
+            this.Notlar.Size = new System.Drawing.Size(337, 93);
+            this.Notlar.TabIndex = 41;
+            this.İpucu.SetToolTip(this.Notlar, "Notlar");
+            // 
             // AnaEkran
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(704, 500);
+            this.ClientSize = new System.Drawing.Size(642, 375);
+            this.Controls.Add(this.Notlar);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.HesaplamaSonucu_tüketim);
             this.Controls.Add(this.Liste_İşler);
@@ -345,6 +358,7 @@
         private System.Windows.Forms.ToolStripMenuItem Menu_aA_150;
         private System.Windows.Forms.ToolStripMenuItem Menu_aA_175;
         private System.Windows.Forms.ToolStripMenuItem Menu_aA_200;
+        private System.Windows.Forms.TextBox Notlar;
     }
 }
 
